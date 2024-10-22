@@ -1,4 +1,4 @@
-# Inicializamos el diccionario de postres
+
 postres = {
     "Tarta de manzana": ["manzanas", "azúcar", "canela", "masa"],
     "Brownie": ["chocolate", "azúcar", "huevos", "harina"],
@@ -57,9 +57,9 @@ def mover_ingrediente(postre_origen, postre_destino, ingrediente):
     """Mueve un ingrediente de un postre a otro."""
     if postre_origen in postres and postre_destino in postres:
         if ingrediente in postres[postre_origen]:
-            # Agregar el ingrediente al destino
+            
             agregar_ingrediente(postre_destino, ingrediente)
-            # Eliminar el ingrediente del origen
+           
             eliminar_ingrediente(postre_origen, ingrediente)
             print(f"Ingrediente '{ingrediente}' movido de {postre_origen} a {postre_destino}.")
         else:
@@ -70,19 +70,28 @@ def mover_ingrediente(postre_origen, postre_destino, ingrediente):
         if postre_destino not in postres:
             print(f"El postre destino '{postre_destino}' no existe.")
 
+def eliminar_ingredientes_repetidos():
+    """Elimina ingredientes duplicados de cada postre."""
+    for postre, ingredientes in postres.items():
+    
+        ingredientes_unicos = list(set(ingredientes))
+        postres[postre] = ingredientes_unicos
+        print(f"Ingredientes duplicados eliminados de {postre}. Nueva lista: {ingredientes_unicos}")
+
 def menu():
     """Muestra el menú y permite al usuario interactuar con el programa."""
     while True:
         print("\n--- Menú ---")
         print("1. Imprimir ingredientes")
         print("2. Agregar ingrediente")
-        print("3. Eliminar ingrediente")  # Opción para eliminar un ingrediente
+        print("3. Eliminar ingrediente")
         print("4. Agregar nuevo postre")
         print("5. Eliminar un postre")
         print("6. Mover ingrediente entre postres")
-        print("7. Salir")
+        print("7. Eliminar ingredientes duplicados") 
+        print("8. Salir")
 
-        opcion = input("Seleccione una opción (1-7): ")
+        opcion = input("Seleccione una opción (1-8): ")
 
         if opcion == '1':
             nombre_postre = input("Ingrese el nombre del postre: ")
@@ -96,12 +105,12 @@ def menu():
         elif opcion == '3':
             nombre_postre = input("Ingrese el nombre del postre: ")
             ingrediente = input("Ingrese el nombre del ingrediente a eliminar: ")
-            eliminar_ingrediente(nombre_postre, ingrediente)  # Aquí se elimina solo el ingrediente
+            eliminar_ingrediente(nombre_postre, ingrediente)
 
         elif opcion == '4':
             nombre_postre = input("Ingrese el nombre del nuevo postre: ")
             ingredientes_input = input("Ingrese los ingredientes separados por comas: ")
-            ingredientes = [i.strip() for i in ingredientes_input.split(',')]  # Limpiar espacios
+            ingredientes = [i.strip() for i in ingredientes_input.split(',')]  
             agregar_postre(nombre_postre, ingredientes)
 
         elif opcion == '5':
@@ -115,11 +124,14 @@ def menu():
             mover_ingrediente(origen, destino, ingrediente)
 
         elif opcion == '7':
+            eliminar_ingredientes_repetidos() 
+
+        elif opcion == '8':
             print("Saliendo del programa...")
             break
 
         else:
             print("Opción no válida. Intente nuevamente.")
 
-# Ejecutar el menú
+
 menu()
